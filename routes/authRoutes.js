@@ -3,6 +3,7 @@ const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const { default: generateToken } = require("../Utils/generateToken");
+const imagekit = require("../Utils/Imagekit");
 
 //REGISTER
 const transporter = nodemailer.createTransport({
@@ -17,15 +18,26 @@ router.post("/registers", async (req, res) => {
     //generate new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    // const existingUser = await User.findOne({ email });
 
+    // if (existingUser) {
+    //   return res.status(409).json({ error: "User already exists." });
+    // }
     //create new user
+    const result = await imagekit.upload({
+      file: req.body.passportPhoto,
+      fileName: `${req.body.firstName}-${req.body.lastName}.jpg`,
+      // width:300,
+      // crop:"scale"
+    });
     const newUser = new User({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
+      roles: req.body.roles,
       schoolRegNumber: req.body.schoolRegNumber,
       phoneNumber: req.body.phoneNumber,
-      phoneNumber: req.body.phoneNumber,
+      passportPhoto: result.url,
       contactAdress: req.body.contactAdress,
       password: hashedPassword,
     });
@@ -35,7 +47,7 @@ router.post("/registers", async (req, res) => {
       to: req.body.email,
       subject: "Registration Successful",
       html: `<p>Hello ${req.body.firstName},</p>
-      <p>Thank you for registering with Our World International Nursery & Primary Shool e-portal. Your account has been successfully created.</p><p>Click <a href="https://example.com/confirm-email">here</a> to confirm your email address.</p>`,
+      <p>Thank you for registering with Our World International Nursery & Primary Shool e-portal. Your account has been successfully created.</p><p>Click <a href="https://example.com/confirm-email">here</a> to vsiti return to the site</p>`,
       //   text: "Congratulations, your registration was successful!",
     };
 
@@ -49,13 +61,14 @@ router.post("/registers", async (req, res) => {
       }
     });
     res.status(200).json({
-      token: generateToken(user._id),
+      // token: generateToken(user._id),
       _id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
       roles: user.roles,
       email: user.email,
       phoneNumber: user.phoneNumber,
+      passportPhoto: user.passportPhoto,
       contactAdress: user.contactAdress,
       isAdmin: user.isAdmin,
       schoolRegNumber: user.schoolRegNumber,

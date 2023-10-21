@@ -13,6 +13,9 @@ const UserSchema = new mongoose.Schema(
     schoolRegNumber: {
       type: String,
     },
+    passportPhoto: {
+      type: String,
+    },
     email: {
       type: String,
       required: true,
