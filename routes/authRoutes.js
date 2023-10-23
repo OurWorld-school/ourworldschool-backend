@@ -90,7 +90,19 @@ router.post("/login", async (req, res) => {
     );
     !validPassword && res.status(400).json("wrong password");
 
-    res.status(200).json(user);
+    res.status(200).json({
+      // token: generateToken(user._id),
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      roles: user.roles,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      passportPhoto: user.passportPhoto,
+      contactAdress: user.contactAdress,
+      isAdmin: user.isAdmin,
+      schoolRegNumber: user.schoolRegNumber,
+    });
   } catch (err) {
     res.status(500).json(err);
   }

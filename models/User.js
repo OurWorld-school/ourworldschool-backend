@@ -50,7 +50,11 @@ const UserSchema = new mongoose.Schema(
       min: 6,
       max: 12,
     },
+    nursery1result: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Nursery1result" },
+    ],
   },
+
   { timestamps: true }
 );
 

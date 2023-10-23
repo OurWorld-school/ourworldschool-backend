@@ -6,6 +6,8 @@ const cors = require("cors");
 const compression = require("compression");
 const dotenv = require("dotenv");
 const authRoute = require("./routes/authRoutes");
+const userRoute = require("./routes/UserRoutes");
+const nursery1Route = require("./routes/Nursery1resultRoutes");
 
 const connectDB = require("./config/db");
 dotenv.config();
@@ -16,6 +18,8 @@ app.use(cors());
 app.use(compression());
 app.use(bodyParser.json({ limit: "20mb" }));
 app.use("/api/auth/", authRoute);
+app.use("/api/users", userRoute);
+app.use("/api/nursery1result", nursery1Route);
 
 app.use(express.static(path.join(__dirname, "/build")));
 app.get("*", (req, res) =>
