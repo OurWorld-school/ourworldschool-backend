@@ -163,7 +163,7 @@ router.put("/update/:id", async (req, res) => {
   } = req.body; // Assuming the request body contains the Biology data as an array of test and exam objects
 
   // Calculate the total score for each entry in the Biology array
-  const EnglishresultsWithTotals = English.map((item) => ({
+  const EnglishresultsWithTotal = English.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
@@ -172,7 +172,7 @@ router.put("/update/:id", async (req, res) => {
   try {
     const nursery1result = await Nursery1result.findById(req.params.id);
 
-    nursery1result.English = EnglishresultsWithTotals || nursery1result.English;
+    nursery1result.English = EnglishresultsWithTotal || nursery1result.English;
 
     const updatedResult = await nursery1result.save();
 
