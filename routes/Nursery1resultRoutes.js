@@ -56,6 +56,7 @@ router.post("/", async (req, res) => {
     exam: item.exam,
     totalScore: item.totalScore,
   }));
+
   try {
     // Create a new result document in the database with the Biology array containing total scores
     const newResult = new Nursery1result({
@@ -147,6 +148,40 @@ router.get("/results/:year/:term/", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
+  }
+});
+router.put("/update/:id", async (req, res) => {
+  const {
+    English,
+    // Mathematics,
+    // SocialHabit,
+    // HealthScience,
+    // BasicScience,
+    // AgricScience,
+    // Rhymes,
+    // Writing,
+  } = req.body; // Assuming the request body contains the Biology data as an array of test and exam objects
+
+  // Calculate the total score for each entry in the Biology array
+  const EnglishresultsWithTotals = English.map((item) => ({
+    test: item.test,
+    exam: item.exam,
+    totalScore: item.totalScore,
+  }));
+  // const { image } = req.body;
+  try {
+    const nursery1result = await Nursery1result.findById(req.params.id);
+
+    nursery1result.English = EnglishresultsWithTotals || nursery1result.English;
+
+    const updatedResult = await nursery1result.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      English: updatedResult.English,
+    });
+  } catch (err) {
+    res.status(500).json({ err: "Failed to update" });
   }
 });
 module.exports = router;
