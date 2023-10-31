@@ -14,6 +14,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 router.post("/registers", async (req, res) => {
+  //  const {class}=req.body;
+  //   const modifyClass = class.replace(/\s+/g, "_");
   try {
     //generate new password
     const salt = await bcrypt.genSalt(10);
@@ -33,6 +35,7 @@ router.post("/registers", async (req, res) => {
     const newUser = new User({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
+      currentClass: req.body.clascurrentClass,
       email: req.body.email,
       roles: req.body.roles,
       schoolRegNumber: req.body.schoolRegNumber,
@@ -67,6 +70,7 @@ router.post("/registers", async (req, res) => {
       lastName: user.lastName,
       roles: user.roles,
       email: user.email,
+      currentClass: user.currentClass,
       phoneNumber: user.phoneNumber,
       passportPhoto: user.passportPhoto,
       contactAdress: user.contactAdress,
@@ -102,6 +106,7 @@ router.post("/login", async (req, res) => {
       contactAdress: user.contactAdress,
       isAdmin: user.isAdmin,
       schoolRegNumber: user.schoolRegNumber,
+      currentClass: user.currentClass,
     });
   } catch (err) {
     res.status(500).json(err);

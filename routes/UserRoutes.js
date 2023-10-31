@@ -33,20 +33,22 @@ router.put("/update/:id", async (req, res) => {
   // const { image } = req.body;
   try {
     const user = await User.findById(req.params.id);
+    user.currentClass = req.body.currentClass || user.currentClass;
+    user.firstName = req.body.firstName || user.firstName;
 
-    user.firstName = req.body.firstName || mp3.firstName;
-
-    user.lastName = req.body.lastName || mp3.lastrName;
-    user.email = req.body.email || mp3.email;
-    user.schoolRegNumber = req.body.schoolRegNumber || mp3.schoolRegNumber;
-    user.phoneNumber = req.body.phoneNumber || mp3.phoneNumber;
-    user.contactAdress = req.body.contactAdress || mp3.contactAdress;
+    user.lastName = req.body.lastName || useer.lastrName;
+    user.email = req.body.email || user.email;
+    user.schoolRegNumber = req.body.schoolRegNumber || user.schoolRegNumber;
+    user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
+    user.contactAdress = req.body.contactAdress || user.contactAdress;
 
     const updatedUser = await user.save();
 
     res.status(200).json({
       _id: updatedUser._id,
       firstName: updatedUser.firstName,
+      currentClass: updatedUser.currentClass,
+
       lastName: updatedUser.lastName,
       email: updatedUser.email,
       phoneNumber: updatedUser.phoneNumber,
@@ -62,7 +64,7 @@ router.put("/update/isAdmin/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
 
-    user.isAdmin = req.body.isAdmin || mp3.isAdmin;
+    user.isAdmin = req.body.isAdmin || user.isAdmin;
 
     const updatedUser = await user.save();
     // Delete the temporary file
@@ -80,7 +82,7 @@ router.put("/update/changeUserRole/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
 
-    user.roles = req.body.roles || mp3.roles;
+    user.roles = req.body.roles || user.roles;
 
     const updatedUser = await user.save();
 
@@ -98,7 +100,7 @@ router.put("/update/deactivateRole/:id", async (req, res) => {
     const user = await User.findById(req.params.id);
 
     user.deactivateUserRole =
-      req.body.deactivateUserRole || mp3.deactivateUserRole;
+      req.body.deactivateUserRole || user.deactivateUserRole;
 
     const updatedUser = await user.save();
     // Delete the temporary file
@@ -106,6 +108,36 @@ router.put("/update/deactivateRole/:id", async (req, res) => {
     res.status(200).json({
       _id: updatedUser._id,
       deactivateUserRole: updatedUser.deactivateUserRole,
+    });
+  } catch (err) {
+    res.status(500).json({ err: "Failed to update" });
+  }
+});
+router.put("/update/scratchcard/:id", async (req, res) => {
+  const { ScratchCard } = req.body;
+  const scratchLimit = ScratchCard.map((item) => ({
+    ScratchCardPin: item.ScratchCardPin,
+    ScratchCardPassword: item.ScratchCardPassword,
+  }));
+  try {
+    const user = await User.findById(req.params.id);
+    if (ScratchCard.usageCount >= 5) {
+      ScratchCard.isValid = false;
+      await ScratchCard.save();
+      return res.status(403).json({
+        error:
+          "This scratch card has been used 5 times and is no longer valid.",
+      });
+    }
+
+    // ScratchCard.usageCount++;
+    user.ScratchCard = scratchLimit || user.ScratchCard;
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      ScratchCard: updatedUser.ScratchCard,
     });
   } catch (err) {
     res.status(500).json({ err: "Failed to update" });

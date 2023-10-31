@@ -8,7 +8,7 @@ const Nursery1resultSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
-    class: {
+    classes: {
       type: String,
     },
     year: {
@@ -32,6 +32,12 @@ const Nursery1resultSchema = new mongoose.Schema(
         totalScore: {
           type: Number,
         },
+        grade: {
+          type: String,
+        },
+        remark: {
+          type: String,
+        },
       },
     ],
     Mathematics: [
@@ -44,6 +50,12 @@ const Nursery1resultSchema = new mongoose.Schema(
         },
         totalScore: {
           type: Number,
+        },
+        grade: {
+          type: String,
+        },
+        remark: {
+          type: String,
         },
       },
     ],
@@ -58,6 +70,12 @@ const Nursery1resultSchema = new mongoose.Schema(
         totalScore: {
           type: Number,
         },
+        grade: {
+          type: String,
+        },
+        remark: {
+          type: String,
+        },
       },
     ],
     HealthScience: [
@@ -70,6 +88,12 @@ const Nursery1resultSchema = new mongoose.Schema(
         },
         totalScore: {
           type: Number,
+        },
+        grade: {
+          type: String,
+        },
+        remark: {
+          type: String,
         },
       },
     ],
@@ -84,6 +108,12 @@ const Nursery1resultSchema = new mongoose.Schema(
         totalScore: {
           type: Number,
         },
+        grade: {
+          type: String,
+        },
+        remark: {
+          type: String,
+        },
       },
     ],
     AgricScience: [
@@ -96,6 +126,12 @@ const Nursery1resultSchema = new mongoose.Schema(
         },
         totalScore: {
           type: Number,
+        },
+        grade: {
+          type: String,
+        },
+        remark: {
+          type: String,
         },
       },
     ],
@@ -110,6 +146,12 @@ const Nursery1resultSchema = new mongoose.Schema(
         totalScore: {
           type: Number,
         },
+        grade: {
+          type: String,
+        },
+        remark: {
+          type: String,
+        },
       },
     ],
     Writing: [
@@ -123,6 +165,12 @@ const Nursery1resultSchema = new mongoose.Schema(
         totalScore: {
           type: Number,
         },
+        grade: {
+          type: String,
+        },
+        remark: {
+          type: String,
+        },
       },
     ],
     TotalScore: {
@@ -134,7 +182,10 @@ const Nursery1resultSchema = new mongoose.Schema(
     Position: {
       type: String,
     },
-    Grade: {
+    numberInClass: {
+      type: Number,
+    },
+    TotalGrade: {
       type: String,
     },
     Remark: {
@@ -143,12 +194,6 @@ const Nursery1resultSchema = new mongoose.Schema(
     Signature: {
       type: String,
     },
-    // ScratchCardPin: {
-    //   type: String,
-    // },
-    // ScratchCardPin: {
-    //   type: String,
-    // },
   },
   {
     timestamps: true,

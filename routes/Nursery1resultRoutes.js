@@ -12,50 +12,70 @@ router.post("/", async (req, res) => {
     BasicScience,
     AgricScience,
     Rhymes,
+    // class,
     Writing,
   } = req.body; // Assuming the request body contains the Biology data as an array of test and exam objects
 
+  // const modifyClass = class.replace(/\s+/g, "-");
   // Calculate the total score for each entry in the Biology array
   const EnglishresultsWithTotal = English.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
   }));
   const MathsresultsWithTotal = Mathematics.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
   }));
   const SocialHabitresultsWithTotal = SocialHabit.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
   }));
   const HealthScienceresultsWithTotal = HealthScience.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
   }));
   const BasicScienceresultsWithTotal = BasicScience.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
   }));
   const AgricresultsWithTotal = AgricScience.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
   }));
   const RhymesresultsWithTotal = Rhymes.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
   }));
   const WritingresultsWithTotal = Writing.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
   }));
+
+  // const grandTotal = English.totalScore + Mathematics.totalScore;
 
   try {
     // Create a new result document in the database with the Biology array containing total scores
@@ -69,15 +89,16 @@ router.post("/", async (req, res) => {
       Writing: WritingresultsWithTotal,
       SocialHabit: SocialHabitresultsWithTotal,
       user: userId,
-      class: req.body.class,
+      classes: req.body.classes,
       year: req.body.year,
       term: req.body.term,
       schoolRegNumber: req.body.schoolRegNumber,
       TotalScore: req.body.TotalScore,
       TotalAverage: req.body.TotalAverage,
       Position: req.body.Position,
+      numberInClass: req.body.numberInClass,
       remark: req.body.remark,
-      Grade: req.body.Grade,
+      TotalGrade: req.body.TotalGrade,
       Signature: req.body.Signature,
     });
     await newResult.save();
@@ -122,13 +143,13 @@ router.get("/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.get("/results/:year/:term/", async (req, res) => {
+router.get("/results/:user/:year/:term/", async (req, res) => {
   try {
-    const { year, term } = req.params;
+    const { user, year, term } = req.params;
 
     // Use the parameters to query the database
     const nursery1result = await Nursery1result.findOne({
-      //   schoolRegNumber,
+      user,
       year,
 
       term,

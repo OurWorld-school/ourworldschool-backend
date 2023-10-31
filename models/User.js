@@ -13,6 +13,7 @@ const UserSchema = new mongoose.Schema(
     schoolRegNumber: {
       type: String,
     },
+
     passportPhoto: {
       type: String,
     },
@@ -21,6 +22,9 @@ const UserSchema = new mongoose.Schema(
       required: true,
 
       unique: true,
+    },
+    currentClass: {
+      type: String,
     },
     phoneNumber: {
       type: String,
@@ -52,6 +56,18 @@ const UserSchema = new mongoose.Schema(
     },
     nursery1result: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Nursery1result" },
+    ],
+    ScratchCard: [
+      {
+        ScratchCardPin: {
+          type: String,
+        },
+        ScratchCardPassword: {
+          type: String,
+        },
+        usageCount: { type: Number, default: 0 },
+        isValid: { type: Boolean, default: true },
+      },
     ],
   },
 
