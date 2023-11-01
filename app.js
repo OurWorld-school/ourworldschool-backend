@@ -7,6 +7,7 @@ const compression = require("compression");
 const dotenv = require("dotenv");
 const authRoute = require("./routes/authRoutes");
 const userRoute = require("./routes/UserRoutes");
+const scratchcardRoute = require("./routes/UserRoutes");
 const nursery1Route = require("./routes/Nursery1resultRoutes");
 
 const connectDB = require("./config/db");
@@ -20,6 +21,7 @@ app.use(bodyParser.json({ limit: "20mb" }));
 app.use("/api/auth/", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/nursery1result", nursery1Route);
+app.use("/api/scratchcard", scratchcardRoute);
 
 app.use(express.static(path.join(__dirname, "/build")));
 app.get("*", (req, res) =>

@@ -12,6 +12,9 @@ router.post("/", async (req, res) => {
     BasicScience,
     AgricScience,
     Rhymes,
+    year,
+    term,
+    classes,
     // class,
     Writing,
   } = req.body; // Assuming the request body contains the Biology data as an array of test and exam objects
@@ -78,6 +81,17 @@ router.post("/", async (req, res) => {
   // const grandTotal = English.totalScore + Mathematics.totalScore;
 
   try {
+    const ResultAlreadyExits = await Nursery1result.findOne({
+      userId,
+      year,
+      term,
+      classes,
+    });
+
+    if (!ResultAlreadyExits) {
+      return res.status(404).json({ message: "User Result already Exits" });
+    }
+
     // Create a new result document in the database with the Biology array containing total scores
     const newResult = new Nursery1result({
       English: EnglishresultsWithTotal,
@@ -89,15 +103,15 @@ router.post("/", async (req, res) => {
       Writing: WritingresultsWithTotal,
       SocialHabit: SocialHabitresultsWithTotal,
       user: userId,
-      classes: req.body.classes,
-      year: req.body.year,
-      term: req.body.term,
+      classes: classes,
+      year: year,
+      term: term,
       schoolRegNumber: req.body.schoolRegNumber,
       TotalScore: req.body.TotalScore,
       TotalAverage: req.body.TotalAverage,
       Position: req.body.Position,
       numberInClass: req.body.numberInClass,
-      remark: req.body.remark,
+      Remark: req.body.Remark,
       TotalGrade: req.body.TotalGrade,
       Signature: req.body.Signature,
     });

@@ -35,6 +35,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
       max: 100,
     },
+    roles: { type: String },
     isAdmin: {
       type: Boolean,
       default: false,
@@ -43,7 +44,8 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    roles: { type: String, default: "Student" },
+    userType: { type: String, default: "Student" },
+
     deactivateUserRole: {
       type: Boolean,
       default: false,
@@ -56,18 +58,6 @@ const UserSchema = new mongoose.Schema(
     },
     nursery1result: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Nursery1result" },
-    ],
-    ScratchCard: [
-      {
-        ScratchCardPin: {
-          type: String,
-        },
-        ScratchCardPassword: {
-          type: String,
-        },
-        usageCount: { type: Number, default: 0 },
-        isValid: { type: Boolean, default: true },
-      },
     ],
   },
 

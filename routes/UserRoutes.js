@@ -113,34 +113,5 @@ router.put("/update/deactivateRole/:id", async (req, res) => {
     res.status(500).json({ err: "Failed to update" });
   }
 });
-router.put("/update/scratchcard/:id", async (req, res) => {
-  const { ScratchCard } = req.body;
-  const scratchLimit = ScratchCard.map((item) => ({
-    ScratchCardPin: item.ScratchCardPin,
-    ScratchCardPassword: item.ScratchCardPassword,
-  }));
-  try {
-    const user = await User.findById(req.params.id);
-    if (ScratchCard.usageCount >= 5) {
-      ScratchCard.isValid = false;
-      await ScratchCard.save();
-      return res.status(403).json({
-        error:
-          "This scratch card has been used 5 times and is no longer valid.",
-      });
-    }
 
-    // ScratchCard.usageCount++;
-    user.ScratchCard = scratchLimit || user.ScratchCard;
-
-    const updatedUser = await user.save();
-
-    res.status(200).json({
-      _id: updatedUser._id,
-      ScratchCard: updatedUser.ScratchCard,
-    });
-  } catch (err) {
-    res.status(500).json({ err: "Failed to update" });
-  }
-});
 module.exports = router;
