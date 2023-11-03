@@ -56,8 +56,26 @@ const UserSchema = new mongoose.Schema(
       min: 6,
       max: 12,
     },
+    prenurseryresult: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "PresNurseryResult" },
+    ],
     nursery1result: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Nursery1result" },
+    ],
+    nursery2result: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Nursery2result" },
+    ],
+    basic1result: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Basic1result" },
+    ],
+    basic2result: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Basic2result" },
+    ],
+    basic3result: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Basic3result" },
+    ],
+    basic4result: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Basic4result" },
     ],
   },
 

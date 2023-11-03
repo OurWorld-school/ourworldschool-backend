@@ -8,7 +8,7 @@ const ResultScratchCardSchema = new mongoose.Schema(
       ref: "User",
     },
     pin: { type: String },
-    password: { tpype: String },
+    serialNo: { tpype: String },
     usageCount: {
       type: Number,
       default: 0,

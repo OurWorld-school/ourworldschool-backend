@@ -7,7 +7,7 @@ const compression = require("compression");
 const dotenv = require("dotenv");
 const authRoute = require("./routes/authRoutes");
 const userRoute = require("./routes/UserRoutes");
-const scratchcardRoute = require("./routes/UserRoutes");
+const scratchcardRoute = require("./routes/ScratchCard");
 const nursery1Route = require("./routes/Nursery1resultRoutes");
 
 const connectDB = require("./config/db");

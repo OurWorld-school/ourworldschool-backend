@@ -88,7 +88,7 @@ router.post("/", async (req, res) => {
       classes,
     });
 
-    if (!ResultAlreadyExits) {
+    if (ResultAlreadyExits) {
       return res.status(404).json({ message: "User Result already Exits" });
     }
 
