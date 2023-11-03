@@ -286,6 +286,9 @@ const Nursery2resultSchema = new mongoose.Schema(
     Remark: {
       type: String,
     },
+    HmRemark: {
+      type: String,
+    },
     Signature: {
       type: String,
     },

@@ -59,6 +59,26 @@ router.put("/update/:id", async (req, res) => {
     res.status(500).json({ err: "Failed to update" });
   }
 });
+router.put("/update/createpassword/:id", async (req, res) => {
+  // const { image } = req.body;
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const user = await User.findById(req.params.id);
+
+    user.password =
+      (await bcrypt.hash(req.body.password, salt)) || user.password;
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      password: updatedUser.password,
+    });
+  } catch (err) {
+    res.status(500).json({ err: "Failed to update" });
+  }
+});
 router.put("/update/isAdmin/:id", async (req, res) => {
   // const { image } = req.body;
   try {

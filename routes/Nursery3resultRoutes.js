@@ -1,4 +1,6 @@
 const Nursery1result = require("../models/Nursery1result");
+const Nursery2result = require("../models/Nursery2result");
+const Nursery3result = require("../models/Nursery3result");
 const User = require("../models/User");
 
 const router = require("express").Router();
@@ -7,16 +9,21 @@ router.post("/", async (req, res) => {
   const {
     English,
     Mathematics,
-    SocialHabit,
-    HealthScience,
+    History,
+    CRK,
+    VerbalReasoning,
+    QuantitativeReasoning,
     BasicScience,
-    AgricScience,
-    Rhymes,
+    Phonics,
+    French,
+    Computer,
+    NationalValues,
+    PVC,
     year,
     term,
     classes,
-    // class,
-    Writing,
+    CreativeArt,
+    Igbo,
   } = req.body; // Assuming the request body contains the Biology data as an array of test and exam objects
 
   // const modifyClass = class.replace(/\s+/g, "-");
@@ -35,20 +42,36 @@ router.post("/", async (req, res) => {
     grade: item.grade,
     remark: item.remark,
   }));
-  const SocialHabitresultsWithTotal = SocialHabit.map((item) => ({
+  const NationalValuesresultsWithTotal = NationalValues.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
     grade: item.grade,
     remark: item.remark,
   }));
-  const HealthScienceresultsWithTotal = HealthScience.map((item) => ({
+  const CRKresultsWithTotal = CRK.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
     grade: item.grade,
     remark: item.remark,
   }));
+  const VerbalReasoningresultsWithTotal = VerbalReasoning.map((item) => ({
+    test: item.test,
+    exam: item.exam,
+    totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
+  }));
+  const QuantitativeReasoningsultsWithTotal = QuantitativeReasoning.map(
+    (item) => ({
+      test: item.test,
+      exam: item.exam,
+      totalScore: item.totalScore,
+      grade: item.grade,
+      remark: item.remark,
+    })
+  );
   const BasicScienceresultsWithTotal = BasicScience.map((item) => ({
     test: item.test,
     exam: item.exam,
@@ -56,32 +79,59 @@ router.post("/", async (req, res) => {
     grade: item.grade,
     remark: item.remark,
   }));
-  const AgricresultsWithTotal = AgricScience.map((item) => ({
+  const HistoryresultsWithTotal = History.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
     grade: item.grade,
     remark: item.remark,
   }));
-  const RhymesresultsWithTotal = Rhymes.map((item) => ({
+  const PhonicsresultsWithTotal = Phonics.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
     grade: item.grade,
     remark: item.remark,
   }));
-  const WritingresultsWithTotal = Writing.map((item) => ({
+  const FrenchresultsWithTotal = French.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
     grade: item.grade,
     remark: item.remark,
   }));
-
+  const PVCresultsWithTotal = PVC.map((item) => ({
+    test: item.test,
+    exam: item.exam,
+    totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
+  }));
+  const CreativeArtresultsWithTotal = CreativeArt.map((item) => ({
+    test: item.test,
+    exam: item.exam,
+    totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
+  }));
+  const IgboresultsWithTotal = Igbo.map((item) => ({
+    test: item.test,
+    exam: item.exam,
+    totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
+  }));
+  const ComputerresultsWithTotal = Computer.map((item) => ({
+    test: item.test,
+    exam: item.exam,
+    totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
+  }));
   // const grandTotal = English.totalScore + Mathematics.totalScore;
 
   try {
-    const ResultAlreadyExits = await Nursery1result.findOne({
+    const ResultAlreadyExits = await Nursery3result.findOne({
       userId,
       year,
       term,
@@ -93,15 +143,21 @@ router.post("/", async (req, res) => {
     }
 
     // Create a new result document in the database with the Biology array containing total scores
-    const newResult = new Nursery1result({
+    const newResult = new Nursery3result({
       English: EnglishresultsWithTotal,
       Mathematics: MathsresultsWithTotal,
       BasicScience: BasicScienceresultsWithTotal,
-      HealthScience: HealthScienceresultsWithTotal,
-      Rhymes: RhymesresultsWithTotal,
-      AgricScience: AgricresultsWithTotal,
-      Writing: WritingresultsWithTotal,
-      SocialHabit: SocialHabitresultsWithTotal,
+      History: HistoryresultsWithTotal,
+      CRK: CRKresultsWithTotal,
+      VerbalReasoning: VerbalReasoningresultsWithTotal,
+      NationalValues: NationalValuesresultsWithTotal,
+      QuantitativeReasoning: QuantitativeReasoningsultsWithTotal,
+      CreativeArt: CreativeArtresultsWithTotal,
+      Phonics: PhonicsresultsWithTotal,
+      Igbo: IgboresultsWithTotal,
+      French: FrenchresultsWithTotal,
+      Computer: ComputerresultsWithTotal,
+      PVC: PVCresultsWithTotal,
       user: userId,
       classes: classes,
       year: year,
@@ -120,7 +176,7 @@ router.post("/", async (req, res) => {
     // Update the user's document with the new result ID
 
     await User.findByIdAndUpdate(userId, {
-      $push: { nursery1result: newResult._id },
+      $push: { nursery3result: newResult._id },
     });
     return res.status(201).json(newResult);
   } catch (error) {
@@ -129,7 +185,7 @@ router.post("/", async (req, res) => {
 });
 router.get("/", async (req, res) => {
   try {
-    const nursery1results = await Nursery1result.find({})
+    const nursery3results = await Nursery3result.find({})
       .sort({ createdAt: -1 })
       .populate("user", [
         "firstName",
@@ -138,14 +194,14 @@ router.get("/", async (req, res) => {
         "schoolRegNumber",
       ]);
 
-    res.json(nursery1results);
+    res.json(nursery3results);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 router.get("/:id", async (req, res) => {
   try {
-    const nursery1result = await Nursery1result.findById(
+    const nursery3result = await Nursery3result.findById(
       req.params.id
     ).populate("user", [
       "firstName",
@@ -153,7 +209,7 @@ router.get("/:id", async (req, res) => {
       "passportPhoto",
       "schoolRegNumber",
     ]);
-    res.status(200).json(nursery1result);
+    res.status(200).json(nursery3result);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -163,7 +219,7 @@ router.get("/results/:user/:year/:term/", async (req, res) => {
     const { user, year, term } = req.params;
 
     // Use the parameters to query the database
-    const nursery1result = await Nursery1result.findOne({
+    const nursery3result = await Nursery3result.findOne({
       user,
       year,
 
@@ -175,12 +231,12 @@ router.get("/results/:user/:year/:term/", async (req, res) => {
       "schoolRegNumber",
     ]);
 
-    if (!nursery1result) {
+    if (!nursery3result) {
       return res.status(404).json({ message: "Result not found" });
     }
 
     // Return the result as JSON
-    res.json(nursery1result);
+    res.json(nursery3result);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });

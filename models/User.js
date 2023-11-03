@@ -52,7 +52,7 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      // required: true,
       min: 6,
       max: 12,
     },
@@ -64,6 +64,9 @@ const UserSchema = new mongoose.Schema(
     ],
     nursery2result: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Nursery2result" },
+    ],
+    nursery3result: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Nursery3result" },
     ],
     basic1result: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Basic1result" },

@@ -191,6 +191,9 @@ const PreNurseryResultSchema = new mongoose.Schema(
     Remark: {
       type: String,
     },
+    HmRemark: {
+      type: String,
+    },
     Signature: {
       type: String,
     },

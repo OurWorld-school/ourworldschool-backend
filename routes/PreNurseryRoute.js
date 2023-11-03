@@ -1,62 +1,63 @@
 const Nursery1result = require("../models/Nursery1result");
+const PreNurseryResult = require("../models/PreNurseryResult");
 const User = require("../models/User");
 
 const router = require("express").Router();
 router.post("/", async (req, res) => {
   const userId = req.body.user;
   const {
-    English,
-    Mathematics,
-    SocialHabit,
-    HealthScience,
-    BasicScience,
-    AgricScience,
+    Numeracy,
+    Literacy,
+    Colouring,
+    HealthHabit,
+    PreScience,
+    PracticalLife,
     Rhymes,
     year,
     term,
     classes,
     // class,
-    Writing,
+    SensorialActivity,
   } = req.body; // Assuming the request body contains the Biology data as an array of test and exam objects
 
   // const modifyClass = class.replace(/\s+/g, "-");
   // Calculate the total score for each entry in the Biology array
-  const EnglishresultsWithTotal = English.map((item) => ({
+  const NumeracyresultsWithTotal = Numeracy.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
     grade: item.grade,
     remark: item.remark,
   }));
-  const MathsresultsWithTotal = Mathematics.map((item) => ({
+  const LiteracyresultWithTotal = Literacy.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
     grade: item.grade,
     remark: item.remark,
   }));
-  const SocialHabitresultsWithTotal = SocialHabit.map((item) => ({
+  const ColouringresultsWithTotal = Colouring.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
     grade: item.grade,
     remark: item.remark,
   }));
-  const HealthScienceresultsWithTotal = HealthScience.map((item) => ({
+  const HealthHabitresultsWithTotal = HealthHabit.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
     grade: item.grade,
     remark: item.remark,
   }));
-  const BasicScienceresultsWithTotal = BasicScience.map((item) => ({
+  const PreScienceresultsWithTotal = PreScience.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
     grade: item.grade,
     remark: item.remark,
   }));
-  const AgricresultsWithTotal = AgricScience.map((item) => ({
+  const PracticalLiferesultsWithTotal = PracticalLife.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
@@ -70,7 +71,7 @@ router.post("/", async (req, res) => {
     grade: item.grade,
     remark: item.remark,
   }));
-  const WritingresultsWithTotal = Writing.map((item) => ({
+  const SensorialActivityresultsWithTotal = SensorialActivity.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
@@ -81,7 +82,7 @@ router.post("/", async (req, res) => {
   // const grandTotal = English.totalScore + Mathematics.totalScore;
 
   try {
-    const ResultAlreadyExits = await Nursery1result.findOne({
+    const ResultAlreadyExits = await PreNurseryResult.findOne({
       userId,
       year,
       term,
@@ -93,15 +94,15 @@ router.post("/", async (req, res) => {
     }
 
     // Create a new result document in the database with the Biology array containing total scores
-    const newResult = new Nursery1result({
-      English: EnglishresultsWithTotal,
-      Mathematics: MathsresultsWithTotal,
-      BasicScience: BasicScienceresultsWithTotal,
-      HealthScience: HealthScienceresultsWithTotal,
+    const newResult = new PreNurseryResult({
+      Numeracy: NumeracyresultsWithTotal,
+      Literacy: LiteracyresultWithTotal,
+      Colouring: ColouringresultsWithTotal,
+      HealthHabit: HealthHabitresultsWithTotal,
       Rhymes: RhymesresultsWithTotal,
-      AgricScience: AgricresultsWithTotal,
-      Writing: WritingresultsWithTotal,
-      SocialHabit: SocialHabitresultsWithTotal,
+      PreScience: PreScienceresultsWithTotal,
+      SensorialActivity: SensorialActivityresultsWithTotal,
+      PracticalLife: PracticalLiferesultsWithTotal,
       user: userId,
       classes: classes,
       year: year,
@@ -120,7 +121,7 @@ router.post("/", async (req, res) => {
     // Update the user's document with the new result ID
 
     await User.findByIdAndUpdate(userId, {
-      $push: { nursery1result: newResult._id },
+      $push: { prenurseryresult: newResult._id },
     });
     return res.status(201).json(newResult);
   } catch (error) {
@@ -129,7 +130,7 @@ router.post("/", async (req, res) => {
 });
 router.get("/", async (req, res) => {
   try {
-    const nursery1results = await Nursery1result.find({})
+    const prenurseryresults = await PreNurseryResult.find({})
       .sort({ createdAt: -1 })
       .populate("user", [
         "firstName",
@@ -138,14 +139,14 @@ router.get("/", async (req, res) => {
         "schoolRegNumber",
       ]);
 
-    res.json(nursery1results);
+    res.json(prenurseryresults);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 router.get("/:id", async (req, res) => {
   try {
-    const nursery1result = await Nursery1result.findById(
+    const prenurseryresult = await PreNurseryResult.findById(
       req.params.id
     ).populate("user", [
       "firstName",
@@ -153,7 +154,7 @@ router.get("/:id", async (req, res) => {
       "passportPhoto",
       "schoolRegNumber",
     ]);
-    res.status(200).json(nursery1result);
+    res.status(200).json(prenurseryresult);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -163,7 +164,7 @@ router.get("/results/:user/:year/:term/", async (req, res) => {
     const { user, year, term } = req.params;
 
     // Use the parameters to query the database
-    const nursery1result = await Nursery1result.findOne({
+    const prenurseryresult = await PreNurseryResult.findOne({
       user,
       year,
 
@@ -175,12 +176,12 @@ router.get("/results/:user/:year/:term/", async (req, res) => {
       "schoolRegNumber",
     ]);
 
-    if (!nursery1result) {
+    if (!prenurseryresult) {
       return res.status(404).json({ message: "Result not found" });
     }
 
     // Return the result as JSON
-    res.json(nursery1result);
+    res.json(prenurseryresult);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });

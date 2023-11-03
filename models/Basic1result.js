@@ -268,6 +268,25 @@ const Basic1resultSchema = new mongoose.Schema(
         },
       },
     ],
+    Computer: [
+      {
+        test: {
+          type: Number,
+        },
+        exam: {
+          type: Number,
+        },
+        totalScore: {
+          type: Number,
+        },
+        grade: {
+          type: String,
+        },
+        remark: {
+          type: String,
+        },
+      },
+    ],
     TotalScore: {
       type: Number,
     },
@@ -284,6 +303,9 @@ const Basic1resultSchema = new mongoose.Schema(
       type: String,
     },
     Remark: {
+      type: String,
+    },
+    HmRemark: {
       type: String,
     },
     Signature: {
