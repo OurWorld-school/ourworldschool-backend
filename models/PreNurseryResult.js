@@ -19,13 +19,13 @@ const PreNurseryResultSchema = new mongoose.Schema(
     },
 
     schoolRegNumber: {
-      type: String,
+      type: String, 
     },
     Numeracy: [
       {
         test: {
           type: Number,
-        },
+        }, 
         exam: {
           type: Number,
         },
