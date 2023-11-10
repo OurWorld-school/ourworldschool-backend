@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
     Phonics,
     French,
     Writing,
-    Rhymes,
+
     Computer,
     year,
     term,
@@ -99,13 +99,7 @@ router.post("/", async (req, res) => {
     grade: item.grade,
     remark: item.remark,
   }));
-  const RhymesresultsWithTotal = Rhymes.map((item) => ({
-    test: item.test,
-    exam: item.exam,
-    totalScore: item.totalScore,
-    grade: item.grade,
-    remark: item.remark,
-  }));
+
   const CreativeArtresultsWithTotal = CreativeArt.map((item) => ({
     test: item.test,
     exam: item.exam,
@@ -156,7 +150,7 @@ router.post("/", async (req, res) => {
       Igbo: IgboresultsWithTotal,
       French: FrenchresultsWithTotal,
       Computer: ComputerresultsWithTotal,
-      Rhymes: RhymesresultsWithTotal,
+
       user: userId,
       classes: classes,
       year: year,

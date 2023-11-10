@@ -189,34 +189,119 @@ router.get("/results/:user/:year/:term/", async (req, res) => {
 });
 router.put("/update/:id", async (req, res) => {
   const {
-    English,
-    // Mathematics,
-    // SocialHabit,
-    // HealthScience,
-    // BasicScience,
-    // AgricScience,
-    // Rhymes,
-    // Writing,
-  } = req.body; // Assuming the request body contains the Biology data as an array of test and exam objects
-
+    Numeracy,
+    Literacy,
+    Colouring,
+    HealthHabit,
+    PreScience,
+    PracticalLife,
+    Rhymes,
+    year,
+    term,
+    classes,
+    // class,
+    SensorialActivity,
+  } = req.body;
   // Calculate the total score for each entry in the Biology array
-  const EnglishresultsWithTotal = English.map((item) => ({
+
+  const NumeracyresultsWithTotal = Numeracy.map((item) => ({
     test: item.test,
     exam: item.exam,
     totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
   }));
-  // const { image } = req.body;
+  const LiteracyresultWithTotal = Literacy.map((item) => ({
+    test: item.test,
+    exam: item.exam,
+    totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
+  }));
+  const ColouringresultsWithTotal = Colouring.map((item) => ({
+    test: item.test,
+    exam: item.exam,
+    totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
+  }));
+  const HealthHabitresultsWithTotal = HealthHabit.map((item) => ({
+    test: item.test,
+    exam: item.exam,
+    totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
+  }));
+  const PreScienceresultsWithTotal = PreScience.map((item) => ({
+    test: item.test,
+    exam: item.exam,
+    totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
+  }));
+  const PracticalLiferesultsWithTotal = PracticalLife.map((item) => ({
+    test: item.test,
+    exam: item.exam,
+    totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
+  }));
+  const RhymesresultsWithTotal = Rhymes.map((item) => ({
+    test: item.test,
+    exam: item.exam,
+    totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
+  }));
+  const SensorialActivityresultsWithTotal = SensorialActivity.map((item) => ({
+    test: item.test,
+    exam: item.exam,
+    totalScore: item.totalScore,
+    grade: item.grade,
+    remark: item.remark,
+  }));
   try {
-    const nursery1result = await Nursery1result.findById(req.params.id);
+    const nursery1result = await PreNurseryResult.findById(req.params.id);
 
-    nursery1result.English = EnglishresultsWithTotal || nursery1result.English;
+    nursery1result.Numeracy =
+      NumeracyresultsWithTotal || nursery1result.NumeracyresultsWithTotal;
+    nursery1result.Literacy =
+      LiteracyresultWithTotal || nursery1result.LiteracyresultWithTotal;
+    nursery1result.Colouring =
+      ColouringresultsWithTotal || nursery1result.ColouringresultsWithTotal;
+    nursery1result.HealthHabit =
+      HealthHabitresultsWithTotal || nursery1result.HealthHabitresultsWithTotal;
+    nursery1result.Rhymes =
+      RhymesresultsWithTotal || nursery1result.RhymesresultsWithTotal;
+    nursery1result.PreScience =
+      PreScienceresultsWithTotal || nursery1result.PreScienceresultsWithTotal;
+    nursery1result.SensorialActivity =
+      SensorialActivityresultsWithTotal ||
+      nursery1result.SensorialActivityresultsWithTotal;
+    nursery1result.PracticalLife =
+      PracticalLiferesultsWithTotal ||
+      nursery1result.PracticalLiferesultsWithTotal;
 
-    const updatedResult = await nursery1result.save();
+    nursery1result.classes = classes || nursery1result.classes;
+    nursery1result.year = year || nursery1result.year;
+    nursery1result.term = term || nursery1result.term;
+    nursery1result.schoolRegNumber =
+      req.body.schoolRegNumber || nursery1result.schoolRegNumber;
+    nursery1result.TotalScore =
+      req.body.TotalScore || nursery1result.TotalScore;
+    nursery1result.TotalAverage =
+      req.body.TotalAverage || nursery1result.TotalAverage;
+    nursery1result.Position = req.body.Position || nursery1result.Position;
+    nursery1result.numberInClass =
+      req.body.numberInClass || nursery1result.numberInClass;
+    nursery1result.Remark = req.body.Remark || nursery1result.Remark;
+    nursery1result.HmRemark = req.body.HmRemark || nursery1result.HmRemark;
+    nursery1result.TotalGrade =
+      req.body.TotalGrade || nursery1result.TotalGrade;
+    nursery1result.Signature = req.body.Signature || nursery1result.Signature;
+    await nursery1result.save();
 
-    res.status(200).json({
-      _id: updatedUser._id,
-      English: updatedResult.English,
-    });
+    res.status(200).json(nursery1result);
   } catch (err) {
     res.status(500).json({ err: "Failed to update" });
   }

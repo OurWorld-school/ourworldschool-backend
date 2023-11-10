@@ -18,8 +18,8 @@ router.post("/registers", async (req, res) => {
   //   const modifyClass = class.replace(/\s+/g, "_");
   try {
     //generate new password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    // const salt = await bcrypt.genSalt(10);
+    // const hashedPassword = await bcrypt.hash(req.body.password, salt);
     // const existingUser = await User.findOne({ email });
 
     // if (existingUser) {
@@ -43,7 +43,7 @@ router.post("/registers", async (req, res) => {
       phoneNumber: req.body.phoneNumber,
       passportPhoto: result.url,
       contactAdress: req.body.contactAdress,
-      password: hashedPassword,
+      // password: hashedPassword,
     });
     ////nodemailer
     const mailOptions = {
