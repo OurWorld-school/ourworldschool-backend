@@ -154,7 +154,7 @@ router.put("/update/isAdmin/:userId", async (req, res) => {
     res.status(500).json({ err: "Failed to update" });
   }
 });
-router.put("/update/isAdmins/:userId", async (req, res) => {
+router.put("/update/isAdminss/:userId", async (req, res) => {
   const { userId } = req.params;
   const { isAdmin } = req.body;
 
