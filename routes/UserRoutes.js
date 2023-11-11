@@ -154,6 +154,26 @@ router.put("/update/isAdmin/:userId", async (req, res) => {
     res.status(500).json({ err: "Failed to update" });
   }
 });
+router.put("/update/isAdmins/:userId", async (req, res) => {
+  const { userId } = req.params;
+  const { isAdmin } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update the user's current class
+    user.isAdmin = isAdmin || user.isAdmin;
+    await user.save();
+
+    res.json({ message: "Admin updated successfully" });
+  } catch (err) {
+    res.status(500).json({ err: "Failed to update" });
+  }
+});
 router.put("/update/changeUserRole/:userId", async (req, res) => {
   const { userId } = req.params;
   const { roles } = req.body;
